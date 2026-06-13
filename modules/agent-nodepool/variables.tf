@@ -71,6 +71,11 @@ variable "extra_block_device_mappings" {
   default     = []
 }
 
+variable "private_dns_name_options" {
+  type        = map(any)
+  description = "Private DNS Name Options"
+}
+
 variable "asg" {
   description = "Node pool AutoScalingGroup scaling definition"
   type = object({
