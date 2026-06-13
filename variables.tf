@@ -73,6 +73,7 @@ variable "extra_block_device_mappings" {
 
 variable "private_dns_name_options" {
   type        = map(any)
+  default     = {}
   description = "Private DNS Name Options"
 }
 
