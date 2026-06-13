@@ -212,10 +212,10 @@ module "servers" {
   userdata             = data.cloudinit_config.this.rendered
   iam_instance_profile = var.iam_instance_profile == "" ? module.iam[0].iam_instance_profile : var.iam_instance_profile
 
-  # Don't allow something not recommended within etcd scaling, set max deliberately and only control desired
+  # Control plane should not autoscale
   asg = {
-    min                  = 1
-    max                  = 7
+    min                  = var.servers
+    max                  = var.servers
     desired              = var.servers
     suspended_processes  = var.suspended_processes
     termination_policies = var.termination_policies
