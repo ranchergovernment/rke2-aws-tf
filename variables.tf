@@ -81,6 +81,15 @@ variable "servers" {
   description = "Number of servers to create"
   type        = number
   default     = 3
+
+  validation {
+    condition = (
+      var.servers == 1 ||
+      var.servers == 3 ||
+      var.servers == 5
+    )
+    error_message = "Servers must an odd number <= 5. See https://etcd.io/docs/v3.6/faq/#why-an-odd-number-of-cluster-members."
+  }
 }
 
 variable "spot" {
