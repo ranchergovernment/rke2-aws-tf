@@ -71,6 +71,12 @@ variable "extra_block_device_mappings" {
   default     = []
 }
 
+variable "private_dns_name_options" {
+  type        = map(any)
+  default     = {}
+  description = "Private DNS Name Options"
+}
+
 variable "extra_security_group_ids" {
   description = "List of additional security group IDs"
   type        = list(string)

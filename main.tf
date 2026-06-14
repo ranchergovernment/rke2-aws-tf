@@ -206,6 +206,7 @@ module "servers" {
   target_group_arns           = local.target_group_arns
   wait_for_capacity_timeout   = var.wait_for_capacity_timeout
   metadata_options            = var.metadata_options
+  private_dns_name_options    = var.private_dns_name_options
   associate_public_ip_address = var.associate_public_ip_address
 
   # Overrideable variables

@@ -29,6 +29,12 @@ resource "aws_launch_template" "this" {
     security_groups             = concat(var.vpc_security_group_ids, [aws_security_group.this.id])
   }
 
+  private_dns_name_options {
+    enable_resource_name_dns_aaaa_record = lookup(var.private_dns_name_options, "enable_resource_name_dns_aaaa_record", null)
+    enable_resource_name_dns_a_record = lookup(var.private_dns_name_options, "enable_resource_name_dns_a_record", null)
+    hostname_type = lookup(var.private_dns_name_options, "hostname_type", null)
+  }
+
   block_device_mappings {
     device_name = lookup(var.block_device_mappings, "device_name", "/dev/sda1")
     ebs {
