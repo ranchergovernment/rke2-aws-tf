@@ -208,8 +208,10 @@ module "servers" {
   metadata_options            = var.metadata_options
   private_dns_name_options    = var.private_dns_name_options
   associate_public_ip_address = var.associate_public_ip_address
+  health_check_type           = var.server_node_health_check_type
+  health_check_grace_period   = var.server_node_health_check_grace_period
 
-  # Overrideable variables
+  # Overridable variables
   userdata             = data.cloudinit_config.this.rendered
   iam_instance_profile = var.iam_instance_profile == "" ? module.iam[0].iam_instance_profile : var.iam_instance_profile
 
@@ -222,8 +224,10 @@ module "servers" {
     termination_policies = var.termination_policies
   }
 
-  # TODO: Ideally set this to `length(var.servers)`, but currently blocked by: https://github.com/rancher/rke2/issues/349
-  min_elb_capacity = 1
+  # By default, only check for 1 server to be healthy before moving on
+  # but if enforce_min_elb_capacity is set, we need to wait for all servers to be healthy
+  min_elb_capacity = var.enforce_min_elb_capacity ? var.servers : 1 
+  wait_for_elb_capacity_on_updates = var.wait_for_elb_capacity_on_updates
 
   tags = merge({
     "Role" = "server",
